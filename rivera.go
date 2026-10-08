@@ -283,9 +283,6 @@ func main() {
 			}
 			global_branchColorsLen = len(global_branchColors)
 
-			/// +1 for space between hash and date
-			config.graphPad = strings.Repeat(" ", config.hashLen+1+len(DATE_FMT)+config.leftMargin)
-
 			/// use the length of the short commit hash from git as the default length
 			/// NOTE: this has the fun side effect of being the only thing alerting us to an empty repo!
 			cmd := makeGitCommand("rev-parse", "--short", "HEAD")
@@ -301,6 +298,9 @@ func main() {
 			if ctx.Uint8("hashlength") != 0 {
 				config.hashLen = int(min(max(4, ctx.Uint8("hashlength")), 40))
 			}
+
+			/// +1 for space between hash and date
+			config.graphPad = strings.Repeat(" ", config.hashLen+1+len(DATE_FMT)+config.leftMargin)
 
 			//////
 			/// now, we build the river
