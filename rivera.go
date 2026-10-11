@@ -437,10 +437,12 @@ func processCommits() error {
 		ret.WriteString(autoRefs)
 		ret.WriteString("{/} ")
 
-		/// truncate message if too long, but only if adding ellipses would be shorter
-		if len(message) > config.msgLen+3 {
-			ret.WriteString(string(message[:config.msgLen]))
-			ret.WriteString("{blackbright}...")
+		/// truncate message if too long, but only if adding ellipses would be shorter'
+		msgLen := len(message)
+		if msgLen > config.msgLen+3 {
+			ret.WriteString(strings.TrimSpace(string(message[:config.msgLen/2])))
+			ret.WriteString("{blackbright}...{/blackbright}")
+			ret.WriteString(strings.TrimSpace(string(message[msgLen-(config.msgLen/2):])))
 		} else {
 			ret.WriteString(string(message))
 		}
