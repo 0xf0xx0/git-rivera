@@ -254,6 +254,7 @@ func main() {
 			/// yyyyyyoink
 			global_repoRoot = os.DirFS(repoRoot)
 			global_gitArgs = ctx.Args().Slice()
+			/// TODO: resolve --start and --end as references
 			config.start = ctx.String("start")
 			config.end = ctx.String("end")
 			config.repoPath = repoRoot
@@ -441,7 +442,7 @@ func processCommits() error {
 		msgLen := len(message)
 		if msgLen > config.msgLen+3 {
 			ret.WriteString(strings.TrimSpace(string(message[:config.msgLen/2])))
-			ret.WriteString("{blackbright}...{/blackbright}")
+			ret.WriteString("{blackbright}...{fg}")
 			ret.WriteString(strings.TrimSpace(string(message[msgLen-(config.msgLen/2):])))
 		} else {
 			ret.WriteString(string(message))
